@@ -1,0 +1,36 @@
+version: "3"
+services:
+  web:
+    image: kkti4216/webrtc-web
+    container_name: wenrtc-web
+    # ports:
+    #   - '4000:5555'
+    # volumes:
+      # - ./ayame-web-sdk-samples/vite.config.js:/app/vite.config.js
+
+  signal:
+    image: kkti4216/webrtc-sig
+    container_name: webrtc-sig
+    ports:
+      - '3333:3333'
+    volumes:
+      - ./ayame/ayame.yaml:/app/ayame.yaml
+
+  https-portal:
+    image: steveltn/https-portal:1.22
+    ports:
+      - '8080:80'
+      - '4430:443'
+    restart: always
+    environment:
+      # DOMAINS: 'webrtc.itokoki.hongo.wide.ad.jp -> http://web:5555'
+      DOMAINS: 'webrtc.itokoki.hongo.wide.ad.jp -> http://web:5555, signaling.itokoki.hongo.wide.ad.jp -> http://signal:3333'
+      WEBSOCKET: "true"
+      STAGE: 'local'
+      LISTEN_IPV6: 'true'
+      ERROR_LOG: default
+      ACCESS_LOG: default
+      #      FORCE_RENEW: 'true'
+    volumes:
+      - ./data/ssl_certs:/var/lib/https-portal
+      # - /etc/localtime:/etc/localtime:ro

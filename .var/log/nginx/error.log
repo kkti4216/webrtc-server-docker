@@ -1,0 +1,2 @@
+2023/04/30 18:36:38 [notice] 263#263: signal process started
+2023/04/30 18:38:33 [emerg] 302#302: host not found in upstream "signal" in /etc/nginx/conf.d/signaling.itokoki.hongo.wide.ad.jp.ssl.conf:33

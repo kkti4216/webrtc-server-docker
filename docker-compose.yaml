@@ -1,36 +1,30 @@
 version: "3"
 services:
   web:
-    image: kkti4216/webrtc-web
+    image: kkti4216/webrtc-web:linux
     container_name: wenrtc-web
-    # ports:
-    #   - '4000:5555'
-    # volumes:
-      # - ./ayame-web-sdk-samples/vite.config.js:/app/vite.config.js
 
   signal:
-    image: kkti4216/webrtc-sig
+    image: kkti4216/webrtc-sig:linux
     container_name: webrtc-sig
-    ports:
-      - '3333:3333'
     volumes:
-      - ./ayame/ayame.yaml:/app/ayame.yaml
+      - ./ayame/ayame.ini:/app/ayame.ini
+      - ./var/log/ayame:/var/log/ayame
 
   https-portal:
     image: steveltn/https-portal:1.22
     ports:
-      - '8080:80'
-      - '4430:443'
+      - '80:80'
+      - '443:443'
     restart: always
     environment:
-      # DOMAINS: 'webrtc.itokoki.hongo.wide.ad.jp -> http://web:5555'
-      DOMAINS: 'webrtc.itokoki.hongo.wide.ad.jp -> http://web:5555, signaling.itokoki.hongo.wide.ad.jp -> http://signal:3333'
+      DOMAINS: 'webrtc.itokoki.hongo.wide.ad.jp -> http://web:5555, signaling.itokoki.hongo.wide.ad.jp -> http://signal:3333/signaling'
       WEBSOCKET: "true"
-      STAGE: 'local'
+      STAGE: 'production'
       LISTEN_IPV6: 'true'
       ERROR_LOG: default
       ACCESS_LOG: default
-      #      FORCE_RENEW: 'true'
     volumes:
       - ./data/ssl_certs:/var/lib/https-portal
-      # - /etc/localtime:/etc/localtime:ro
+      - ./var/log/nginx:/var/log/nginx
+      - /etc/localtime:/etc/localtime:ro

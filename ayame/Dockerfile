@@ -12,4 +12,4 @@ RUN make init
 
 EXPOSE 3333
 
-CMD ["./ayame"]
+CMD ["./bin/ayame"]

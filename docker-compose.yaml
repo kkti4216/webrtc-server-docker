@@ -2,7 +2,7 @@ version: "3"
 services:
   web:
     image: kkti4216/webrtc-web:linux
-    container_name: wenrtc-web
+    container_name: webrtc-web
 
   signal:
     image: kkti4216/webrtc-sig:linux

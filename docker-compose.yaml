@@ -1,11 +1,11 @@
 version: "3"
 services:
   web:
-    image: kkti4216/webrtc-web:latest
+    image: webrtc-web
     container_name: webrtc-web
 
   signal:
-    image: kkti4216/webrtc-sig:linux
+    image: webrtc-sig
     container_name: webrtc-sig
     volumes:
       - ./ayame/ayame.ini:/app/ayame.ini
